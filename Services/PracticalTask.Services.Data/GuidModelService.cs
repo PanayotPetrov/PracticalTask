@@ -1,22 +1,22 @@
 ﻿namespace PracticalTask.Services.Data
 {
     using System;
-
+    using System.Threading.Tasks;
     using PracticalTask.Data.Models;
 
     public class GuidModelService : IGuidModelService
     {
-        public bool Create()
+        public async Task<bool> Create()
         {
             throw new NotImplementedException();
         }
 
-        public bool SaveAllReadyToSave()
+        public async Task<bool> SaveAllReadyToSave()
         {
             throw new NotImplementedException();
         }
 
-        public bool Update(Status status)
+        public async Task<bool> Update(Status status)
         {
             throw new NotImplementedException();
         }

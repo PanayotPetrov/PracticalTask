@@ -1,13 +1,15 @@
 ﻿namespace PracticalTask.Services.Data
 {
+    using System.Threading.Tasks;
+
     using PracticalTask.Data.Models;
 
     public interface IGuidModelService
     {
-        public bool Create();
+        public Task<bool> Create();
 
-        public bool Update(Status status);
+        public Task<bool> Update(Status status);
 
-        public bool SaveAllReadyToSave();
+        public Task<bool> SaveAllReadyToSave();
     }
 }
