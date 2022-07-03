@@ -1,14 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using PracticalTask.Data;
-using PracticalTask.Data.Common;
-using PracticalTask.Data.Common.Repositories;
-using PracticalTask.Data.Repositories;
-using PracticalTask.Services.Data;
-
-namespace PracticalTask.Services.WorkerService
+﻿namespace PracticalTask.Services.WorkerService
 {
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using PracticalTask.Data;
+    using PracticalTask.Data.Common;
+    using PracticalTask.Data.Common.Repositories;
+    using PracticalTask.Data.Repositories;
+    using PracticalTask.Services.Data;
     public class Program
     {
         static async Task Main(string[] args)
