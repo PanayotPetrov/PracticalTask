@@ -6,9 +6,9 @@
 
     public interface IGuidModelService
     {
-        public Task<bool> Create();
+        public Task<bool> Create(string guid);
 
-        public Task<bool> Update(Status status);
+        public Task<bool> Update(Status status, int guidModelId);
 
         public Task<bool> SaveAllReadyToSave();
     }

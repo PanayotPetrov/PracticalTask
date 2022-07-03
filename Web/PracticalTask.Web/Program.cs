@@ -2,15 +2,6 @@
 {
     using System.Reflection;
 
-    using PracticalTask.Data;
-    using PracticalTask.Data.Common;
-    using PracticalTask.Data.Common.Repositories;
-    using PracticalTask.Data.Models;
-    using PracticalTask.Data.Repositories;
-    using PracticalTask.Data.Seeding;
-    using PracticalTask.Services.Mapping;
-    using PracticalTask.Web.ViewModels;
-
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -18,7 +9,15 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using PracticalTask.Data;
+    using PracticalTask.Data.Common;
+    using PracticalTask.Data.Common.Repositories;
+    using PracticalTask.Data.Models;
+    using PracticalTask.Data.Repositories;
+    using PracticalTask.Data.Seeding;
     using PracticalTask.Services.Data;
+    using PracticalTask.Services.Mapping;
+    using PracticalTask.Web.ViewModels;
 
     public class Program
     {
