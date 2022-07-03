@@ -18,6 +18,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using PracticalTask.Services.Data;
 
     public class Program
     {
@@ -61,6 +62,8 @@
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
+            services.AddScoped<IGuidModelService, GuidModelService>();
+            services.AddScoped<ISavedGuidModelService, SavedGuidModelService>();
         }
 
         private static void Configure(WebApplication app)
