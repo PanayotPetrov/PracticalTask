@@ -12,8 +12,8 @@ using PracticalTask.Data;
 namespace PracticalTask.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220630202231_AddModels")]
-    partial class AddModels
+    [Migration("20220703140136_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -250,6 +250,76 @@ namespace PracticalTask.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("PracticalTask.Data.Models.GuidModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("CancelledOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Guid")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ReadyToBeSavedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GuidModels");
+                });
+
+            modelBuilder.Entity("PracticalTask.Data.Models.SavedGuidModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte[]>("FileData")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<int>("GuidModelId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("SavedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GuidModelId")
+                        .IsUnique();
+
+                    b.ToTable("SavedGuidModels");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("PracticalTask.Data.Models.ApplicationRole", null)
@@ -301,6 +371,17 @@ namespace PracticalTask.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("PracticalTask.Data.Models.SavedGuidModel", b =>
+                {
+                    b.HasOne("PracticalTask.Data.Models.GuidModel", "GuidModel")
+                        .WithOne("SavedGuidModel")
+                        .HasForeignKey("PracticalTask.Data.Models.SavedGuidModel", "GuidModelId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("GuidModel");
+                });
+
             modelBuilder.Entity("PracticalTask.Data.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Claims");
@@ -308,6 +389,11 @@ namespace PracticalTask.Data.Migrations
                     b.Navigation("Logins");
 
                     b.Navigation("Roles");
+                });
+
+            modelBuilder.Entity("PracticalTask.Data.Models.GuidModel", b =>
+                {
+                    b.Navigation("SavedGuidModel");
                 });
 #pragma warning restore 612, 618
         }

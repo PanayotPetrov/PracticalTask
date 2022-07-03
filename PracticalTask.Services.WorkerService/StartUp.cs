@@ -10,9 +10,11 @@
         {
             this.guidModelService = guidModelService;
         }
-        public void Run()
+
+        public async Task RunAsync()
         {
-            Console.WriteLine("Running...");
+            var guid = Guid.NewGuid().ToString();
+            await this.guidModelService.Create(guid);
         }
     }
 }

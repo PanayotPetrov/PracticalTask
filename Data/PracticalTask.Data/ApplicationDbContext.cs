@@ -24,6 +24,10 @@
         {
         }
 
+        public DbSet<GuidModel> GuidModels { get; set; }
+
+        public DbSet<SavedGuidModel> SavedGuidModels { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)

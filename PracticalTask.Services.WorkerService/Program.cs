@@ -11,7 +11,7 @@ namespace PracticalTask.Services.WorkerService
 {
     public class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             var builder = new ConfigurationBuilder()
                 .AddJsonFile($"appsettings.json", true, true);
@@ -22,10 +22,23 @@ namespace PracticalTask.Services.WorkerService
 
             ConfigureServices(services, config);
 
-            services.AddSingleton<StartUp, StartUp>()
-                .BuildServiceProvider()
-                .GetService<StartUp>()
-                .Run();
+            var app = ConfigureApp(services);
+
+            await app.RunAsync();
+        }
+
+        private static StartUp ConfigureApp(IServiceCollection services)
+        {
+
+            var dbContext = services.BuildServiceProvider()
+                .GetRequiredService<ApplicationDbContext>();
+            dbContext.Database.Migrate();
+
+            var app = services.AddSingleton<StartUp, StartUp>()
+                    .BuildServiceProvider()
+                    .GetService<StartUp>();
+
+            return app;
         }
 
         private static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
