@@ -15,6 +15,7 @@
     using PracticalTask.Data.Models;
     using PracticalTask.Data.Repositories;
     using PracticalTask.Data.Seeding;
+    using PracticalTask.Services.BackgroundWorkerService;
     using PracticalTask.Services.Data;
     using PracticalTask.Services.Mapping;
     using PracticalTask.Web.ViewModels;
@@ -63,6 +64,7 @@
             // Application services
             services.AddScoped<IGuidModelService, GuidModelService>();
             services.AddScoped<ISavedGuidModelService, SavedGuidModelService>();
+            services.AddHostedService<BackgroundWorker>();
         }
 
         private static void Configure(WebApplication app)

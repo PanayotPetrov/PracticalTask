@@ -33,6 +33,7 @@
     <ProjectReference Include="..\..\PracticalTask.Common\PracticalTask.Common.csproj" />
     <ProjectReference Include="..\..\Data\PracticalTask.Data.Models\PracticalTask.Data.Models.csproj" />
     <ProjectReference Include="..\..\Data\PracticalTask.Data\PracticalTask.Data.csproj" />
+    <ProjectReference Include="..\..\PracticalTask.Services.BackgroundWorkerService\PracticalTask.Services.BackgroundWorkerService.csproj" />
     <ProjectReference Include="..\..\Services\PracticalTask.Services.Data\PracticalTask.Services.Data.csproj" />
     <ProjectReference Include="..\..\Services\PracticalTask.Services.Mapping\PracticalTask.Services.Mapping.csproj" />
     <ProjectReference Include="..\PracticalTask.Web.ViewModels\PracticalTask.Web.ViewModels.csproj" />
