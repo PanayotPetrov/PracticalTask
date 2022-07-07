@@ -1,5 +1,6 @@
 ﻿namespace PracticalTask.Services.Data
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using PracticalTask.Data.Models;
@@ -11,5 +12,7 @@
         public Task<bool> Update(Status status, int guidModelId);
 
         public Task<bool> SaveAllReadyToSave();
+
+        public IEnumerable<T> GetAllActive<T>();
     }
 }

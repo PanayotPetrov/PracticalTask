@@ -2,15 +2,29 @@
 {
     using System.Diagnostics;
 
-    using PracticalTask.Web.ViewModels;
-
     using Microsoft.AspNetCore.Mvc;
+    using PracticalTask.Services.Data;
+    using PracticalTask.Web.ViewModels;
+    using PracticalTask.Web.ViewModels.Home;
 
     public class HomeController : BaseController
     {
+        private readonly IGuidModelService guidModelService;
+
+        public HomeController(IGuidModelService guidModelService)
+        {
+            this.guidModelService = guidModelService;
+        }
+
         public IActionResult Index()
         {
-            return this.View();
+            var guidViewModels = this.guidModelService.GetAllActive<GuidViewModel>();
+            var model = new GuidViewModelList
+            {
+                GuidViewModels = guidViewModels,
+            };
+
+            return this.View(model);
         }
 
         public IActionResult Privacy()

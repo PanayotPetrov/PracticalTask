@@ -1,11 +1,13 @@
 ﻿namespace PracticalTask.Services.Data
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     using PracticalTask.Data.Common.Repositories;
     using PracticalTask.Data.Models;
+    using PracticalTask.Services.Mapping;
 
     public class GuidModelService : IGuidModelService
     {
@@ -35,6 +37,11 @@
             }
 
             return true;
+        }
+
+        public IEnumerable<T> GetAllActive<T>()
+        {
+            return this.guidModelRepository.AllAsNoTracking().Where(x => x.Status == Status.Active).To<T>().ToList();
         }
 
         public async Task<bool> SaveAllReadyToSave()

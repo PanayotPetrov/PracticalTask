@@ -1,9 +1,42 @@
 ﻿@using PracticalTask.Common
+@model PracticalTask.Web.ViewModels.Home.GuidViewModelList;
 @{
     this.ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container">
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Guid number</th>
+                <th scope="col">Status</th>
+                <th scope="col">Created on</th>
+
+                <th scope="col">Ready to be saved on</th>
+                <th scope="col">Cancelled on</th>
+                <th scope="col">Change status</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var guidViewModel in Model.GuidViewModels)
+            {
+                <tr>
+                    <td>@guidViewModel.Guid</td>
+                    <td>@guidViewModel.Status</td>
+                    <td>@guidViewModel.CreatedOn</td>
+
+                    <td>@guidViewModel.ReadyToBeSavedOn</td>
+                    <td>@guidViewModel.CancelledOn</td>
+                    <td>
+                        <button class="btn btn-success">
+                            Change to active
+                        </button>
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+
 </div>

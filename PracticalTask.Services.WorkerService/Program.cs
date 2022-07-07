@@ -12,10 +12,10 @@
     {
         static async Task Main(string[] args)
         {
-            var builder = new ConfigurationBuilder()
+            var configBuilder = new ConfigurationBuilder()
                 .AddJsonFile($"appsettings.json", true, true);
 
-            var config = builder.Build();
+            var config = configBuilder.Build();
 
             var services = new ServiceCollection();
 
@@ -28,7 +28,6 @@
 
         private static StartUp ConfigureApp(IServiceCollection services)
         {
-
             var dbContext = services.BuildServiceProvider()
                 .GetRequiredService<ApplicationDbContext>();
             dbContext.Database.Migrate();
