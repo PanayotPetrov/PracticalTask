@@ -8,7 +8,7 @@
     public class SavedGuidModel : BaseModel<int>
     {
         [Required]
-        public string Name { get; set; }
+        public string FileName { get; set; }
 
         public DateTime SavedOn { get; set; }
 
