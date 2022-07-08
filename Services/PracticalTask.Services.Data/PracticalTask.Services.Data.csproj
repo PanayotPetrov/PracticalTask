@@ -22,6 +22,7 @@
     <ProjectReference Include="..\..\Data\PracticalTask.Data.Common\PracticalTask.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\PracticalTask.Data.Models\PracticalTask.Data.Models.csproj" />
     <ProjectReference Include="..\PracticalTask.Services.Mapping\PracticalTask.Services.Mapping.csproj" />
+    <ProjectReference Include="..\PracticalTask.Services.Models\PracticalTask.Services.Models.csproj" />
   </ItemGroup>
 
 </Project>

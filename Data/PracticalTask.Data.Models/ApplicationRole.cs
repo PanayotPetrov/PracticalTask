@@ -3,9 +3,8 @@ namespace PracticalTask.Data.Models
 {
     using System;
 
-    using PracticalTask.Data.Common.Models;
-
     using Microsoft.AspNetCore.Identity;
+    using PracticalTask.Data.Common.Models;
 
     public class ApplicationRole : IdentityRole, IAuditInfo, IDeletableEntity
     {

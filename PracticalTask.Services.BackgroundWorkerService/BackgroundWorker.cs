@@ -1,5 +1,8 @@
 ﻿namespace PracticalTask.Services.BackgroundWorkerService
 {
+    using PracticalTask.Services.Data;
+    using PracticalTask.Services.Models;
+
     public sealed class BackgroundWorker : IHostedService, IAsyncDisposable
     {
         private readonly Task _completedTask = Task.CompletedTask;
@@ -15,14 +18,30 @@
 
         public Task StartAsync(CancellationToken stoppingToken)
         {
-            this.timer = new Timer(this.DoWork, null, TimeSpan.Zero, TimeSpan.FromMinutes(this.minutesOnWhichToStartService));
+            this.timer = new Timer(async (e) => { await DoWork(e); }, null, TimeSpan.Zero, TimeSpan.FromMinutes(this.minutesOnWhichToStartService));
 
             return _completedTask;
         }
 
-        private void DoWork(object? state)
+        private async Task DoWork(object? state)
         {
-            Console.WriteLine("Working......");
+            using (var serviceScope = this.serviceProvider.CreateScope())
+            {
+                var savedGuidModelService = serviceScope.ServiceProvider.GetRequiredService<ISavedGuidModelService>();
+                var guidModelService = serviceScope.ServiceProvider.GetRequiredService<IGuidModelService>();
+
+                var guidModels = guidModelService.GetAllReadyToSave<GuidModelDTO>();
+
+                foreach (var guidModel in guidModels)
+                {
+
+                    // TO DO: Check if GuidModel status should be cancelled
+                    // TO DO: Create file
+                    // TO DO: Change status of Guid Model
+                    // TO DO: Create SavedGuidModel
+
+                }
+            }
         }
 
         public Task StopAsync(CancellationToken stoppingToken)

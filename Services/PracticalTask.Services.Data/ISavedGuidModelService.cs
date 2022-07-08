@@ -2,8 +2,10 @@
 {
     using System.Threading.Tasks;
 
+    using PracticalTask.Services.Models;
+
     public interface ISavedGuidModelService
     {
-        public Task<bool> Create();
+        public Task<bool> CreateAsync(GuidModelDTO model);
     }
 }

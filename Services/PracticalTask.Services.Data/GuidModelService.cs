@@ -18,7 +18,7 @@
             this.guidModelRepository = guidModelRepository;
         }
 
-        public async Task<bool> Create(string guid)
+        public async Task<bool> CreateAsync(string guid)
         {
             var guidModel = new GuidModel
             {
@@ -44,16 +44,21 @@
             return this.guidModelRepository.AllAsNoTracking().Where(x => x.Status == Status.Active).To<T>().ToList();
         }
 
-        public async Task<bool> SaveAllReadyToSave()
+        public IEnumerable<T> GetAllReadyToSave<T>()
         {
-            throw new NotImplementedException();
+            return this.guidModelRepository.AllAsNoTracking().Where(x => x.Status == Status.ReadyToSave).To<T>().ToList();
         }
 
-        public async Task<bool> Update(Status status, int guidModelId)
+        public async Task<bool> ChangeStatusToReadyToSaveAsync(int guidModelId)
         {
             var guidModel = this.guidModelRepository.All().FirstOrDefault(x => x.Id == guidModelId);
 
-            guidModel.Status = status;
+            if (guidModel == null || guidModel?.Status != Status.Active)
+            {
+                return false;
+            }
+
+            guidModel.Status = Status.ReadyToSave;
 
             try
             {

@@ -14,7 +14,7 @@
         public async Task RunAsync()
         {
             var guid = Guid.NewGuid().ToString();
-            await this.guidModelService.Create(guid);
+            await this.guidModelService.CreateAsync(guid);
         }
     }
 }

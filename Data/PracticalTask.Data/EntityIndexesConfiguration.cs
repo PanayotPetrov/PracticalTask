@@ -2,9 +2,8 @@
 {
     using System.Linq;
 
-    using PracticalTask.Data.Common.Models;
-
     using Microsoft.EntityFrameworkCore;
+    using PracticalTask.Data.Common.Models;
 
     internal static class EntityIndexesConfiguration
     {

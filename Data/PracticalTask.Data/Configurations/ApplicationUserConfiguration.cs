@@ -1,8 +1,8 @@
 ﻿namespace PracticalTask.Data.Configurations
 {
-    using PracticalTask.Data.Models;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using PracticalTask.Data.Models;
 
     public class ApplicationUserConfiguration : IEntityTypeConfiguration<ApplicationUser>
     {
