@@ -53,18 +53,8 @@
                 return false;
             }
 
-            guidModel.Status = Status.ReadyToSave;
-
-            try
-            {
-                await this.guidModelRepository.SaveChangesAsync();
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-
-            return true;
+            var result = await this.ChangeStatusAsync(guidModel, Status.ReadyToSave);
+            return result;
         }
 
         public async Task<bool> UpdateStatusAsync(int id, Status status)
@@ -76,14 +66,28 @@
                 return false;
             }
 
-            guidModel.Status = status;
-
             if (status == Status.Cancelled)
             {
                 guidModel.CancelledOn = DateTime.UtcNow;
             }
 
-            await this.guidModelRepository.SaveChangesAsync();
+            var result = await this.ChangeStatusAsync(guidModel, status);
+            return result;
+        }
+
+        private async Task<bool> ChangeStatusAsync(GuidModel guidModel, Status status)
+        {
+            guidModel.Status = status;
+
+            try
+            {
+                await this.guidModelRepository.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
             return true;
         }
     }

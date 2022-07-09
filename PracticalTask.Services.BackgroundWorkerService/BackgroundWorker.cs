@@ -8,12 +8,14 @@
     {
         private readonly Task _completedTask = Task.CompletedTask;
         private readonly IServiceProvider serviceProvider;
+        private readonly string rootPath;
         private readonly int minutesOnWhichToStartService;
         private Timer? timer;
 
-        public BackgroundWorker(IServiceProvider serviceProvider, IConfiguration config)
+        public BackgroundWorker(IServiceProvider serviceProvider, IConfiguration config, IHostEnvironment environment)
         {
             this.serviceProvider = serviceProvider;
+            this.rootPath = $"{environment.ContentRootPath}/guids/";
             this.minutesOnWhichToStartService = int.Parse(config["BackgroundServiceStartMinutes"]);
         }
 
@@ -41,9 +43,10 @@
                     }
                     else
                     {
-                        // TO DO: Create file
+                        //TO DO: Create file
+
                         await guidModelService.UpdateStatusAsync(guidModel.Id, Status.Saved);
-                        // TO DO: Create SavedGuidModel
+                        //TO DO: Create create GuidFileModel
                     }
                 }
             }
