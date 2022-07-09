@@ -18,6 +18,7 @@
     using PracticalTask.Services.BackgroundWorkerService;
     using PracticalTask.Services.Data;
     using PracticalTask.Services.Mapping;
+    using PracticalTask.Services.Models;
     using PracticalTask.Web.ViewModels;
 
     public class Program
@@ -77,7 +78,7 @@
                 new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
             }
 
-            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
+            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly, typeof(GuidModelDTO).GetTypeInfo().Assembly);
 
             if (app.Environment.IsDevelopment())
             {

@@ -3,14 +3,16 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using PracticalTask.Data.Models;
+
     public interface IGuidModelService
     {
         public Task<bool> CreateAsync(string guid);
 
         public Task<bool> ChangeStatusToReadyToSaveAsync(int guidModelId);
 
-        public IEnumerable<T> GetAllReadyToSave<T>();
+        public IEnumerable<T> GetAllByStatus<T>(Status status);
 
-        public IEnumerable<T> GetAllActive<T>();
+        public Task<bool> UpdateStatusAsync(int id, Status status);
     }
 }

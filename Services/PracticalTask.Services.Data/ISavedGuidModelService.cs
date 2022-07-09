@@ -6,6 +6,6 @@
 
     public interface ISavedGuidModelService
     {
-        public Task<bool> CreateAsync(GuidModelDTO model);
+        public Task<bool> CreateAsync(SavedGuidModelDTO model);
     }
 }

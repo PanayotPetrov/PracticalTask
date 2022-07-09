@@ -1,5 +1,6 @@
 ﻿namespace PracticalTask.Services.BackgroundWorkerService
 {
+    using PracticalTask.Data.Models;
     using PracticalTask.Services.Data;
     using PracticalTask.Services.Models;
 
@@ -30,16 +31,20 @@
                 var savedGuidModelService = serviceScope.ServiceProvider.GetRequiredService<ISavedGuidModelService>();
                 var guidModelService = serviceScope.ServiceProvider.GetRequiredService<IGuidModelService>();
 
-                var guidModels = guidModelService.GetAllReadyToSave<GuidModelDTO>();
+                var readyToSaveguidModels = guidModelService.GetAllByStatus<GuidModelDTO>(Status.ReadyToSave);
 
-                foreach (var guidModel in guidModels)
+                foreach (var guidModel in readyToSaveguidModels)
                 {
-
-                    // TO DO: Check if GuidModel status should be cancelled
-                    // TO DO: Create file
-                    // TO DO: Change status of Guid Model
-                    // TO DO: Create SavedGuidModel
-
+                    if (DateTime.UtcNow - guidModel.CreatedOn >= TimeSpan.FromMinutes(20))
+                    {
+                        await guidModelService.UpdateStatusAsync(guidModel.Id, Status.Cancelled);
+                    }
+                    else
+                    {
+                        // TO DO: Create file
+                        await guidModelService.UpdateStatusAsync(guidModel.Id, Status.Saved);
+                        // TO DO: Create SavedGuidModel
+                    }
                 }
             }
         }

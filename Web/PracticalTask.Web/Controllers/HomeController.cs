@@ -3,6 +3,7 @@
     using System.Diagnostics;
 
     using Microsoft.AspNetCore.Mvc;
+    using PracticalTask.Data.Models;
     using PracticalTask.Services.Data;
     using PracticalTask.Web.ViewModels;
     using PracticalTask.Web.ViewModels.Home;
@@ -18,7 +19,7 @@
 
         public IActionResult Index()
         {
-            var guidViewModels = this.guidModelService.GetAllActive<GuidViewModel>();
+            var guidViewModels = this.guidModelService.GetAllByStatus<GuidViewModel>(Status.Active);
             var model = new GuidViewModelList
             {
                 GuidViewModels = guidViewModels,

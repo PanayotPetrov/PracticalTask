@@ -39,14 +39,9 @@
             return true;
         }
 
-        public IEnumerable<T> GetAllActive<T>()
+        public IEnumerable<T> GetAllByStatus<T>(Status status)
         {
-            return this.guidModelRepository.AllAsNoTracking().Where(x => x.Status == Status.Active).To<T>().ToList();
-        }
-
-        public IEnumerable<T> GetAllReadyToSave<T>()
-        {
-            return this.guidModelRepository.AllAsNoTracking().Where(x => x.Status == Status.ReadyToSave).To<T>().ToList();
+            return this.guidModelRepository.AllAsNoTracking().Where(x => x.Status == status).To<T>().ToList();
         }
 
         public async Task<bool> ChangeStatusToReadyToSaveAsync(int guidModelId)
@@ -69,6 +64,26 @@
                 return false;
             }
 
+            return true;
+        }
+
+        public async Task<bool> UpdateStatusAsync(int id, Status status)
+        {
+            var guidModel = this.guidModelRepository.All().FirstOrDefault(x => x.Id == id);
+
+            if (guidModel is null)
+            {
+                return false;
+            }
+
+            guidModel.Status = status;
+
+            if (status == Status.Cancelled)
+            {
+                guidModel.CancelledOn = DateTime.UtcNow;
+            }
+
+            await this.guidModelRepository.SaveChangesAsync();
             return true;
         }
     }

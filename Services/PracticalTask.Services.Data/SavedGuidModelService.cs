@@ -1,5 +1,6 @@
 ﻿namespace PracticalTask.Services.Data
 {
+    using System;
     using System.Threading.Tasks;
 
     using PracticalTask.Data.Common.Repositories;
@@ -15,15 +16,27 @@
             this.savedGuidModelRepository = savedGuidModelRepository;
         }
 
-        public async Task<bool> CreateAsync(GuidModelDTO model)
+        public async Task<bool> CreateAsync(SavedGuidModelDTO model)
         {
             var savedGuidModel = new SavedGuidModel
             {
-
+                FileName = model.FileName,
+                FileData = model.FileData,
+                GuidModelId = model.GuidModelId,
+                Status = Status.Saved,
+                SavedOn = DateTime.UtcNow,
             };
 
-            await this.savedGuidModelRepository.AddAsync(savedGuidModel);
-            await this.savedGuidModelRepository.SaveChangesAsync();
+            try
+            {
+                await this.savedGuidModelRepository.AddAsync(savedGuidModel);
+                await this.savedGuidModelRepository.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
             return true;
         }
     }
