@@ -1,5 +1,7 @@
 ﻿namespace PracticalTask.Services.BackgroundWorkerService
 {
+    using System.Text;
+
     using PracticalTask.Data.Models;
     using PracticalTask.Services.Data;
     using PracticalTask.Services.Models;
@@ -31,22 +33,39 @@
             using (var serviceScope = this.serviceProvider.CreateScope())
             {
                 var guidModelService = serviceScope.ServiceProvider.GetRequiredService<IGuidModelService>();
+                var guidFileModelService = serviceScope.ServiceProvider.GetRequiredService<IGuidFileModelService>();
 
-                var readyToSaveguidModels = guidModelService.GetAllByStatus<GuidModelDTO>(Status.ReadyToSave);
+                var readyToSaveGuidModels = guidModelService.GetAllByStatus<GuidModelDTO>(Status.ReadyToSave);
 
-                foreach (var guidModel in readyToSaveguidModels)
+                var guidModelIds = new List<int>();
+                var sb = new StringBuilder();
+
+                foreach (var guidModel in readyToSaveGuidModels)
                 {
-                    if (DateTime.UtcNow - guidModel.CreatedOn >= TimeSpan.FromMinutes(20))
-                    {
-                        await guidModelService.UpdateStatusAsync(guidModel.Id, Status.Cancelled);
-                    }
-                    else
-                    {
-                        //TO DO: Create file
+                    var status = Status.Cancelled;
 
-                        await guidModelService.UpdateStatusAsync(guidModel.Id, Status.Saved);
-                        //TO DO: Create create GuidFileModel
+                    if (DateTime.UtcNow - guidModel.CreatedOn < TimeSpan.FromMinutes(20))
+                    {
+                        status = Status.Saved;
+                        guidModelIds.Add(guidModel.Id);
+                        sb.AppendLine(guidModel.Guid);
                     }
+
+                    await guidModelService.UpdateStatusAsync(guidModel.Id, status);
+                }
+
+                if (guidModelIds.Count > 0)
+                {
+                    //TO DO: Create file
+
+                    var model = new GuidFileModelDTO
+                    {
+                        FileContent = sb.ToString(),
+                        FileName = "Test file name",
+                        GuidModelIds = guidModelIds,
+                    };
+
+                    await guidFileModelService.CreateAsync(model);
                 }
             }
         }
