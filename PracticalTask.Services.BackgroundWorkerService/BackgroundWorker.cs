@@ -56,12 +56,20 @@
 
                 if (guidModelIds.Count > 0)
                 {
-                    //TO DO: Create file
+                    Directory.CreateDirectory($"{rootPath}");
+
+                    var fileName = DateTime.UtcNow.ToString("yyyyMMddHHmmss");
+
+                    using (FileStream fs = File.Create($"{rootPath}{fileName}.txt"))
+                    {
+                        byte[] guidData = new UTF8Encoding(true).GetBytes(sb.ToString());
+                        await fs.WriteAsync(guidData);
+                    }
 
                     var model = new GuidFileModelDTO
                     {
                         FileContent = sb.ToString(),
-                        FileName = "Test file name",
+                        FileName = fileName,
                         GuidModelIds = guidModelIds,
                     };
 
