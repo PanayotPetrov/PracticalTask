@@ -30,7 +30,6 @@
         {
             using (var serviceScope = this.serviceProvider.CreateScope())
             {
-                var savedGuidModelService = serviceScope.ServiceProvider.GetRequiredService<ISavedGuidModelService>();
                 var guidModelService = serviceScope.ServiceProvider.GetRequiredService<IGuidModelService>();
 
                 var readyToSaveguidModels = guidModelService.GetAllByStatus<GuidModelDTO>(Status.ReadyToSave);

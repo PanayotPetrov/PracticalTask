@@ -15,7 +15,5 @@
         public DateTime? ReadyToBeSavedOn { get; set; }
 
         public DateTime? CancelledOn { get; set; }
-
-        public SavedGuidModel SavedGuidModel { get; set; }
     }
 }

@@ -64,7 +64,6 @@
 
             // Application services
             services.AddScoped<IGuidModelService, GuidModelService>();
-            services.AddScoped<ISavedGuidModelService, SavedGuidModelService>();
             services.AddHostedService<BackgroundWorker>();
         }
 
