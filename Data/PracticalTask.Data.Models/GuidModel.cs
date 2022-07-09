@@ -15,5 +15,9 @@
         public DateTime? ReadyToBeSavedOn { get; set; }
 
         public DateTime? CancelledOn { get; set; }
+
+        public int? GuidFileModelId { get; set; }
+
+        public GuidFileModel GuidFileModel { get; set; }
     }
 }

@@ -64,6 +64,8 @@
 
             // Application services
             services.AddScoped<IGuidModelService, GuidModelService>();
+            services.AddScoped<IGuidFileModelService, GuidFileModelService>();
+
             services.AddHostedService<BackgroundWorker>();
         }
 
