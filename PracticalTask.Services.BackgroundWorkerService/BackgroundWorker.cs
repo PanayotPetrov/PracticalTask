@@ -11,14 +11,18 @@
         private readonly Task _completedTask = Task.CompletedTask;
         private readonly IServiceProvider serviceProvider;
         private readonly string rootPath;
-        private readonly int minutesOnWhichToStartService;
+        private readonly double minutesOnWhichToStartService = 10;
         private Timer? timer;
 
         public BackgroundWorker(IServiceProvider serviceProvider, IConfiguration config, IHostEnvironment environment)
         {
             this.serviceProvider = serviceProvider;
             this.rootPath = $"{environment.ContentRootPath}/guids/";
-            this.minutesOnWhichToStartService = int.Parse(config["BackgroundServiceStartMinutes"]);
+
+            if (double.TryParse(config["BackgroundServiceStartMinutes"], out var minutesOnWhichToStartService))
+            {
+                this.minutesOnWhichToStartService = minutesOnWhichToStartService;
+            };
         }
 
         public Task StartAsync(CancellationToken stoppingToken)
@@ -40,16 +44,14 @@
 
                 foreach (var guidModel in readyToSaveGuidModels)
                 {
-                    var status = Status.Cancelled;
-
-                    if (DateTime.UtcNow - guidModel.ModifiedOn < TimeSpan.FromMinutes(20))
+                    if (DateTime.UtcNow - guidModel.ModifiedOn >= TimeSpan.FromMinutes(2 * this.minutesOnWhichToStartService))
                     {
-                        status = Status.Saved;
-                        guidModelIds.Add(guidModel.Id);
-                        sb.AppendLine(guidModel.Guid);
+                        await guidModelService.UpdateStatusAsync(guidModel.Id, Status.Cancelled);
+                        continue;
                     }
 
-                    await guidModelService.UpdateStatusAsync(guidModel.Id, status);
+                    guidModelIds.Add(guidModel.Id);
+                    sb.AppendLine(guidModel.Guid);
                 }
 
                 if (guidModelIds.Count > 0)

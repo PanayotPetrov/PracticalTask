@@ -24,11 +24,12 @@
         {
             var guidFileModel = AutoMapperConfig.MapperInstance.Map<GuidFileModel>(model);
 
-            var guidModels = this.guidModelRepository.All().Where(x => x.Status == Status.Saved).ToList();
+            var guidModels = this.guidModelRepository.All().Where(x => x.Status == Status.ReadyToSave).ToList();
 
             foreach (var guidModel in guidModels)
             {
                 guidFileModel.GuidModels.Add(guidModel);
+                guidModel.Status = Status.Saved;
             }
 
             try
