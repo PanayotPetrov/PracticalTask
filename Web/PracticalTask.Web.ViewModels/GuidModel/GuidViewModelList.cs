@@ -1,4 +1,4 @@
-﻿namespace PracticalTask.Web.ViewModels.Home
+﻿namespace PracticalTask.Web.ViewModels.GuidModel
 {
     using System.Collections.Generic;
 

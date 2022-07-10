@@ -1,5 +1,5 @@
 ﻿@using PracticalTask.Common
-@model PracticalTask.Web.ViewModels.Home.GuidViewModelList;
+@model PracticalTask.Web.ViewModels.GuidModel.GuidViewModelList;
 @{
     this.ViewData["Title"] = "Active guid models";
 }
@@ -18,13 +18,13 @@
 
             @foreach (var guidViewModel in Model.GuidViewModels)
             {
-                <tr>
+                <tr id="@guidViewModel.Id">
                     <td>@guidViewModel.Guid</td>
                     <td>@guidViewModel.Status</td>
                     <td>@guidViewModel.CreatedOn</td>
                     <td>@guidViewModel.ModifiedOn</td>
                     <td>
-                        <button class="btn btn-success">
+                        <button class="btn btn-success" onclick="ChangeStatus(@guidViewModel.Id)">
                             Change to ready to save
                         </button>
                     </td>
@@ -35,3 +35,33 @@
     </table>
 
 </div>
+
+<script>
+    function ChangeStatus(id) {
+
+        $.ajax({
+            url: '/GuidModel/ChangeStatus',
+            type: 'POST',
+            data: JSON.stringify(id),
+            contentType: 'application/json',
+            success: function (result, status, xhr) {
+                if (xhr.status == 200) {
+                    $("#" + id).remove();
+                }
+            },
+            error: function (xhr) {
+                $("#modalLabel").text('Oops!');
+                var errors = JSON.parse(xhr.responseText);
+                for (var i = 0; i < errors.length; i++) {
+                    $("#modalBody").append('<li class="text-danger">' + errors[i] + '</li>')
+                }
+                $("#exampleModal").modal('show')
+            }
+        });
+
+        //$("#btnCloseModal").click(function () {
+        //    $("#exampleModal").modal("hide");
+        //    $("#modalBody").text('');
+        //});
+    }
+</script>

@@ -1,5 +1,5 @@
 ﻿@using PracticalTask.Common
-@model PracticalTask.Web.ViewModels.Home.GuidViewModelList;
+@model PracticalTask.Web.ViewModels.GuidModel.GuidViewModelList;
 @{
     this.ViewData["Title"] = "Saved guid models";
 }
@@ -12,6 +12,7 @@
                 <th scope="col">Status</th>
                 <th scope="col">Created on</th>
                 <th scope="col">Saved on</th>
+                <th scope="col">File name</th>
             </tr>
         </thead>
         <tbody>
@@ -22,6 +23,7 @@
                     <td>@guidViewModel.Status</td>
                     <td>@guidViewModel.CreatedOn</td>
                     <td>@guidViewModel.ModifiedOn</td>
+                    <td>@guidViewModel.SavedFileName</td>
                 </tr>
 
             }
