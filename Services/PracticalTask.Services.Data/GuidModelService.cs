@@ -48,7 +48,7 @@
         {
             var guidModel = this.guidModelRepository.All().FirstOrDefault(x => x.Id == guidModelId);
 
-            if (guidModel == null || guidModel?.Status != Status.Active)
+            if (guidModel == null || guidModel.Status != Status.Active)
             {
                 return false;
             }
@@ -64,11 +64,6 @@
             if (guidModel is null)
             {
                 return false;
-            }
-
-            if (status == Status.Cancelled)
-            {
-                guidModel.CancelledOn = DateTime.UtcNow;
             }
 
             var result = await this.ChangeStatusAsync(guidModel, status);

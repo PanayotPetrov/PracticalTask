@@ -34,9 +34,7 @@
             {
                 var guidModelService = serviceScope.ServiceProvider.GetRequiredService<IGuidModelService>();
                 var guidFileModelService = serviceScope.ServiceProvider.GetRequiredService<IGuidFileModelService>();
-
                 var readyToSaveGuidModels = guidModelService.GetAllByStatus<GuidModelDTO>(Status.ReadyToSave);
-
                 var guidModelIds = new List<int>();
                 var sb = new StringBuilder();
 
@@ -44,7 +42,7 @@
                 {
                     var status = Status.Cancelled;
 
-                    if (DateTime.UtcNow - guidModel.CreatedOn < TimeSpan.FromMinutes(20))
+                    if (DateTime.UtcNow - guidModel.ModifiedOn < TimeSpan.FromMinutes(20))
                     {
                         status = Status.Saved;
                         guidModelIds.Add(guidModel.Id);

@@ -1,0 +1,30 @@
+﻿@using PracticalTask.Common
+@model PracticalTask.Web.ViewModels.Home.GuidViewModelList;
+@{
+    this.ViewData["Title"] = "Ready to save guid models";
+}
+
+<div class="container">
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Guid number</th>
+                <th scope="col">Status</th>
+                <th scope="col">Created on</th>
+                <th scope="col">Ready to save on</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var guidViewModel in Model.GuidViewModels)
+            {
+                <tr>
+                    <td>@guidViewModel.Guid</td>
+                    <td>@guidViewModel.Status</td>
+                    <td>@guidViewModel.CreatedOn</td>
+                    <td>@guidViewModel.ModifiedOn</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

@@ -14,9 +14,7 @@
 
         public DateTime CreatedOn { get; set; }
 
-        public DateTime? ReadyToBeSavedOn { get; set; }
-
-        public DateTime? CancelledOn { get; set; }
+        public DateTime? ModifiedOn { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {
