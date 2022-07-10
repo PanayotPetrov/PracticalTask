@@ -52,27 +52,7 @@
     </div>
 </div>
 
-<script>
-    function ChangeStatus(id) {
-
-        $.ajax({
-            url: '/GuidModel/ChangeStatus',
-            type: 'POST',
-            data: JSON.stringify(id),
-            contentType: 'application/json',
-            success: function (result, status, xhr) {
-                if (xhr.status == 200) {
-                    $("#" + id).remove();
-                    $("#modalLabel").text('Success');
-                    $("#modalBody").text('You have successfully changed the status to ready to save.');
-                    $("#myModal").modal('show');
-                }
-            }
-        });
-
-        $("#btnCloseModal").click(function () {
-            $("#myModal").modal("hide");
-            $("#modalBody").text('');
-        });
-    }
-</script>
+@section Scripts
+{
+    <script src="~/js/site.min.js" asp-append-version="true"></script>
+}
